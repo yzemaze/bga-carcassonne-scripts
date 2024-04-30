@@ -12,9 +12,8 @@ Some improvements of BGA’s Carcassonne UI.
 ## More useful scripts
 1) Replace second edition tiles everywhere with the <a href="original-tiles.user.styl">original tiles</a>.
 2) <a href="mobile-condensed-playerboards.user.styl">Shrink playerboards on mobile devices</a> or smaller windows (<= 960 px). (With 640 px wide windows you can watch all duels of a WTCOC match on 2 screens. ;) )
-3) <a href="lobby-hide-cce.user.js">Hide games Carcassonne with expansions</a> or 3+ players from the game lobby.
-4) <a href="https://github.com/yzemaze/bga-scripts/blob/main/replay-with-keys.user.js">keyboard support for replays</a>
-5) <a href="https://github.com/yzemaze/bga-scripts/blob/main/game-logs-decluttered.user.styl">decluttered game logs</a> (say goodbye to friends’ status spam …)
+3) <a href="https://github.com/yzemaze/bga-scripts/blob/main/replay-with-keys.user.js">keyboard support for replays</a>
+4) <a href="https://github.com/yzemaze/bga-scripts/blob/main/game-logs-decluttered.user.styl">decluttered game logs</a> (say goodbye to friends’ status spam …)
 
 ## Prerequisites
 <a href="https://violentmonkey.github.io/">Violentmonkey</a> or the like for .user.js-files. <a href="/highlight-discards.user.js">highlight-discards.user.js</a> has a tiny config section. Please edit the discard string according to the language you use on BGA.
