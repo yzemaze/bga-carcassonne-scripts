@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          BGA Carcassonne highlight discarded tiles
-// @description   Highlights a discard in the log and displays discarded tiles below remaining tiles text
+// @description   Highlights a discard in the log and displays discarded tiles permanently.
 // @match         https://*.boardgamearena.com/archive/replay/*
 // @match         https://*.boardgamearena.com/*/carcassonne*
 // @icon          https://x.boardgamearena.net/data/themereleases/231110-1000/img/logo/logo.png
@@ -12,6 +12,13 @@
 // @author        yzemaze
 // @license       GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // ==/UserScript==
+
+// The script should work fine for replays and live games. Due to early gamelog
+// entries being wiped in specific cases, it doesn’t function reliably in
+// turn-based games, as spectator or when refreshing your game. I couldn’t
+// figure out when exactly this happens. It seems to be a restriction applied
+// after a specific number of moves or elapsed time. Please beware of this
+// issue and use the script with caution.
 
 "use strict";
 if (document.querySelector(".bgagame-carcassonne")) {
