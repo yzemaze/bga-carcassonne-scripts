@@ -12,8 +12,10 @@ Some improvements of BGA’s Carcassonne UI.
 ## More useful scripts
 1) Replace second edition tiles everywhere with the <a href="https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/original-tiles.user.styl">original tiles</a>.
 2) <a href="https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/mobile-condensed-playerboards.user.styl">Shrink playerboards on mobile devices</a> or smaller windows (<= 960 px). (With 640 px wide windows you can watch all duels of a WTCOC match on 2 screens. ;) )
-3) <a href="https://github.com/yzemaze/bga-scripts/raw/main/replay-with-keys.user.js">keyboard support for replays</a>
-4) <a href="https://github.com/yzemaze/bga-scripts/raw/main/game-logs-decluttered.user.styl">decluttered game logs</a> (say goodbye to friends’ status spam …)
+3) [Carcassonne tile draw stats](https://github.com/yzemaze/carcassonne-stats)
+4) <a href="https://github.com/yzemaze/bga-scripts/raw/main/replay-with-keys.user.js">keyboard support for replays</a>
+5) <a href="https://github.com/yzemaze/bga-scripts/raw/main/game-logs-decluttered.user.styl">decluttered game logs</a> (say goodbye to friends’ status spam …)
+
 
 ## Prerequisites
 <a href="https://violentmonkey.github.io/">Violentmonkey</a> or the like for .user.js-files. <a href="/highlight-discards.user.js">highlight-discards.user.js</a> has a tiny config section. Please edit the discard string according to the language you use on BGA.
