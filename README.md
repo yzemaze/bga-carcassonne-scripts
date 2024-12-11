@@ -5,9 +5,9 @@ Some improvements of BGA’s Carcassonne UI.
 ![screenshot-board](/img/screenshot-board.png?raw=true)
 1) <a href="https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/highlight-discards.user.js">Highlight discard messages</a> in the log.
 2) <a href="https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/highlight-discards.user.js">Show discarded tiles</a> permanently.
-3) <a href="https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/log-tiles-fix.user.styl">Fix distorted tiles</a> in the log (and if desired align them to the right).
+3) <a href="https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/log-tiles-fix.user.styl">Fix distorted tiles</a> in the log (and if desired align them to the right – obsolete since update 07/2024).
 4) <a href="https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/tile-borders.user.styl">Border width and colors</a> for last placed tiles.
-5) <a href="https://github.com/yzemaze/bga-scripts/raw/main/starting-player-tag.user.js">Starting player icon</a> (not limited to Carcassonne!).
+5) <a href="https://github.com/yzemaze/bga-scripts/raw/main/starting-player-tag.user.js">Starting player icon</a> (obsolete for Carcassonne since update 07/2024).
 
 ## More useful scripts
 1) Replace second edition tiles everywhere with the <a href="https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/original-tiles.user.styl">original tiles</a>.
