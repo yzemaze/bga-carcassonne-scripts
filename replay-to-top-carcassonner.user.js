@@ -30,15 +30,22 @@
 		}
 
 		function copyData() {
-				const tableRef = document.getElementById('table_ref_item_table_id');
-				const remainingTiles = document.getElementById('remainingtiles');
+				const tableEl = document.getElementById('table_ref_item_table_id');
+				const tableId = tableEl ? tableEl.textContent.replace(/\D/g, "") : ''
+				const remainingTiles = document.getElementById('remainingtiles').textContent.trim();
 				const moveNbr = document.getElementById('move_nbr').textContent.trim();
 				const pageUrl = new URL(window.location);
 				pageUrl.searchParams.set('goto', moveNbr);
+				const tableUrl = "https://boardgamearena.com/gamereview?table=" + tableId;
+				players = document.querySelectorAll("#player_boards .player-name");
+				const player1 = players[0].textContent.trim().replace(/»\s*/g, "");
+				const player2 = players[1].textContent.trim().replace(/»\s*/g, "");
 
-				GM_setValue('table_ref', tableRef ? tableRef.textContent.replace(/\D/g, "") : '');
-				GM_setValue('remaining_tiles', remainingTiles ? remainingTiles.textContent.trim() : '');
-				GM_setValue('page_url', pageUrl.href + "\n");
+				GM_setValue('table_ref', tableId);
+				GM_setValue('remaining_tiles', remainingTiles);
+				GM_setValue('page_url', pageUrl.href + "\n\n");
+				GM_setValue('csv', [tableId, moveNbr, remainingTiles, tableUrl, pageUrl.href, player1, player2].join(";"));
+
 
 				GM_openInTab('https://top-carcassonner.com/problems/propose', { active: true });
 		}
@@ -47,6 +54,7 @@
 				const tableRefItem = GM_getValue('table_ref', '');
 				const remainingTiles = GM_getValue('remaining_tiles', '');
 				const pageUrl = GM_getValue('page_url', '');
+				const csv = GM_getValue('csv', '');
 
 				const tableId = document.getElementById('inline-table-id');
 				const remainingTileCount = document.getElementById('inline-remaining-tile-count');
@@ -55,7 +63,7 @@
 				if (tableId) tableId.value = tableRefItem;
 				if (remainingTileCount) remainingTileCount.value = remainingTiles;
 				if (textArea) {
-					textArea.value = pageUrl;
+					textArea.value = pageUrl + csv;
 					textArea.focus();
 				}
 		}
