@@ -13,8 +13,9 @@ Some improvements of BGA’s Carcassonne UI.
 1) Replace second edition tiles everywhere with the <a href="https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/original-tiles.user.styl">original tiles</a>.
 2) <a href="https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/mobile-condensed-playerboards.user.styl">Shrink playerboards on mobile devices</a> or smaller windows (<= 960 px). (With 640 px wide windows you can watch all duels of a WTCOC match on 2 screens. ;) )
 3) [Carcassonne tile draw probabilities](https://github.com/yzemaze/carcassonne-probabilities)
-4) <a href="https://github.com/yzemaze/bga-scripts/raw/main/replay-with-keys.user.js">keyboard support for replays</a>
-5) <a href="https://github.com/yzemaze/bga-scripts/raw/main/game-logs-decluttered.user.styl">decluttered game logs</a> (say goodbye to friends’ status spam …)
+4) [Replay to top-carcassonner.com](https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/replay-to-top-carcassonner.user.js)
+5) <a href="https://github.com/yzemaze/bga-scripts/raw/main/replay-with-keys.user.js">keyboard support for replays</a>
+6) <a href="https://github.com/yzemaze/bga-scripts/raw/main/game-logs-decluttered.user.styl">decluttered game logs</a> (say goodbye to friends’ status spam …)
 
 
 ## Prerequisites
