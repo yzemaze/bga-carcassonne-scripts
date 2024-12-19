@@ -38,7 +38,7 @@
 				const pageUrl = new URL(window.location);
 				pageUrl.searchParams.set('goto', moveNbr);
 				const tableUrl = "https://boardgamearena.com/gamereview?table=" + tableId;
-				players = document.querySelectorAll("#player_boards .player-name");
+				const players = document.querySelectorAll("#player_boards .player-name");
 				const player1 = players[0].textContent.trim().replace(/»\s*/g, "");
 				const player2 = players[1].textContent.trim().replace(/»\s*/g, "");
 
