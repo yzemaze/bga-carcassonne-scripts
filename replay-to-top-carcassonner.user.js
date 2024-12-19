@@ -2,10 +2,10 @@
 // @name        BGA Carcassonne replay to top-carcassonner.com
 // @description Opens https://top-carcassonner.com/problems/propose and autofills the input fields with values from a BGA replay
 // @license     GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
-// @homepageURL https://github.com/yzemaze/
-// @supportURL  https://github.com/yzemaze/
-// @downloadURL https://github.com/yzemaze/
-// @updateURL   https://github.com/yzemaze/
+// @homepageURL https://github.com/yzemaze/bga-carcassonne-scripts
+// @supportURL  https://github.com/yzemaze/bga-carcassonne-scripts/issues
+// @downloadURL https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/replay-to-top-carcassonner.user.js
+// @updateURL   https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/replay-to-top-carcassonner.user.js
 // @namespace   https://github.com/yzemaze/
 // @match       https://boardgamearena.com/archive/replay/*
 // @match       https://top-carcassonner.com/problems/propose
