@@ -12,7 +12,7 @@
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_openInTab
-// @version     0.2.1
+// @version     0.2.2
 // @author      yzemaze
 // ==/UserScript==
 
@@ -89,7 +89,6 @@
 						copyData();
 				});
 
-				archivecontrol = document.getElementById("archivecontrol");
-				archivecontrol.appendChild(button);
+				document.body.appendChild(button);
 		}
 })();
