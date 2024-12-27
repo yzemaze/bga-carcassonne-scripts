@@ -13,7 +13,7 @@
 // @grant       GM_setValue
 // @grant       GM_openInTab
 // @grant       GM_setClipboard
-// @version     0.2.3
+// @version     0.3.0
 // @author      yzemaze
 // ==/UserScript==
 
@@ -62,10 +62,18 @@
         const remainingTileCount = document.getElementById('inline-remaining-tile-count');
         const textArea = document.querySelector('textarea#inline-remaining-tile-count');
 
-        if (tableId) tableId.value = tableRefItem;
-        if (remainingTileCount) remainingTileCount.value = remainingTiles;
+        // update values and internal variables of Vue.js
+        if (tableId) {
+            tableId.value = tableRefItem;
+            tableId.dispatchEvent(new Event('input'));
+        }
+        if (remainingTileCount) {
+            remainingTileCount.value = remainingTiles;
+            remainingTileCount.dispatchEvent(new Event('input'));
+        }
         if (textArea) {
             textArea.value = pageUrl;
+            textArea.dispatchEvent(new Event('input'));
             textArea.focus();
         }
     }
