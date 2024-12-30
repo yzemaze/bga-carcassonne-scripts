@@ -13,7 +13,7 @@
 // @grant       GM_setValue
 // @grant       GM_openInTab
 // @grant       GM_setClipboard
-// @version     0.3.0
+// @version     0.3.1
 // @author      yzemaze
 // ==/UserScript==
 
@@ -27,7 +27,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
                 pasteData();
-            }, 3000);
+            }, 1000);
         });
     }
 
