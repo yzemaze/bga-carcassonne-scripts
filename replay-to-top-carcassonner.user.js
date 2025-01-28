@@ -13,7 +13,7 @@
 // @grant       GM_setValue
 // @grant       GM_openInTab
 // @grant       GM_setClipboard
-// @version     0.3.1
+// @version     0.3.2
 // @author      yzemaze
 // ==/UserScript==
 
@@ -80,7 +80,7 @@
 
     function addButton() {
         const button = document.createElement('button');
-        button.textContent = 'Copy Data to top-carcassonner';
+        button.textContent = 'Copy to top-carc';
         button.style.position = 'fixed';
         button.style.top = '10px';
         button.style.left = '180px';
