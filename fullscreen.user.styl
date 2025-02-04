@@ -1,0 +1,19 @@
+/* ==UserStyle==
+@name						BGA Carcassonne fullscreen
+@description		increase map_container to full height, hide map-moving arrows
+@version				0.1
+@author					yzemaze
+@namespace			github.com/yzemaze/
+@homepageURL		https://github.com/yzemaze/bga-carcassonne-scripts/
+@supportURL			https://github.com/yzemaze/bga-carcassonne-scripts/issues
+@updateURL			https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/fullscreen.user.styl
+@license				GPLv3
+@preprocessor		stylus
+==/UserStyle== */
+
+@-moz-document regexp("https://(\w*\.)?boardgamearena.com/.*/carcassonne.*"), regexp("https://(\w*\.)?boardgamearena.com/archive/replay/.*")
+	.bgagame-carcassonne
+		#map_container
+			height 950px
+		#movetop, #moveleft, #moveright, #movedown
+			display none
