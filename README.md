@@ -3,19 +3,20 @@ Some improvements of BGA’s Carcassonne UI.
 
 ## Just show me …
 ![screenshot-board](/img/screenshot-board.png?raw=true)
-1) <a href="https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/highlight-discards.user.js">Highlight discard messages</a> in the log.
-2) <a href="https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/highlight-discards.user.js">Show discarded tiles</a> permanently.
-3) <a href="https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/log-tiles-fix.user.styl">Fix distorted tiles</a> in the log (and if desired align them to the right – obsolete since update 07/2024).
-4) <a href="https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/tile-borders.user.styl">Border width and colors</a> for last placed tiles.
-5) <a href="https://github.com/yzemaze/bga-scripts/raw/main/starting-player-tag.user.js">Starting player icon</a> (obsolete for Carcassonne since update 07/2024).
+1. <a href="https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/highlight-discards.user.js">Highlight discard messages</a> in the log.
+2. <a href="https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/highlight-discards.user.js">Show discarded tiles</a> permanently.
+3. <a href="https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/log-tiles-fix.user.styl">Fix distorted tiles</a> in the log (and if desired align them to the right – obsolete since update 07/2024).
+4. <a href="https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/tile-borders.user.styl">Border width and colors</a> for last placed tiles.
+5. <a href="https://github.com/yzemaze/bga-scripts/raw/main/starting-player-tag.user.js">Starting player icon</a> (obsolete for Carcassonne since update 07/2024).
 
 ## More useful scripts
-1) Replace second edition tiles everywhere with the <a href="https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/original-tiles.user.styl">original tiles</a>.
-2) <a href="https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/mobile-condensed-playerboards.user.styl">Shrink playerboards on mobile devices</a> or smaller windows (<= 960 px). (With 640 px wide windows you can watch all duels of a WTCOC match on 2 screens. ;) )
-3) [Carcassonne tile draw probabilities](https://github.com/yzemaze/carcassonne-probabilities)
-4) [Replay to top-carcassonner.com](https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/replay-to-top-carcassonner.user.js)
-5) <a href="https://github.com/yzemaze/bga-scripts/raw/main/replay-with-keys.user.js">keyboard support for replays</a>
-6) <a href="https://github.com/yzemaze/bga-scripts/raw/main/game-logs-decluttered.user.styl">decluttered game logs</a> (say goodbye to friends’ status spam …)
+1. Replace second edition tiles everywhere with the <a href="https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/original-tiles.user.styl">original tiles</a>.
+2. [Carcassonne tile draw probabilities](https://github.com/yzemaze/carcassonne-probabilities)
+3. [BGA duel finder](https://github.com/yzemaze/bga-duel-finder)
+4. <a href="https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/mobile-condensed-playerboards.user.styl">Shrink playerboards on mobile devices</a> or smaller windows (<= 960 px). (With 640 px wide windows you can watch all duels of a WTCOC match on 2 screens. ;) )
+5. [Replay to top-carcassonner.com](https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/replay-to-top-carcassonner.user.js)
+6. <a href="https://github.com/yzemaze/bga-scripts/raw/main/replay-with-keys.user.js">keyboard support for replays</a>
+7. <a href="https://github.com/yzemaze/bga-scripts/raw/main/game-logs-decluttered.user.styl">decluttered game logs</a> (say goodbye to friends’ status spam …)
 
 
 ## Prerequisites
