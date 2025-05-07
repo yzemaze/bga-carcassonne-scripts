@@ -7,19 +7,41 @@
 // @homepageURL  https://github.com/yzemaze/bga-carcassonne-scripts/
 // @supportURL   https://github.com/yzemaze/bga-carcassonne-scripts/issues
 // @downloadURL  https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/auto-zoom.user.js
-// @version      0.2.0
+// @version      0.3.4
 // @author       yzemaze
 // @license      GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // ==/UserScript==
 
-const TILES_THRESHOLD = 55; // auto-zoom only below x remaining tiles
-const WIDTH_THRESHOLD = 1200; // block execution if window width is greater than threshold
-const ANIMATION_TIME = 800; // ms to wait for tile placement animation
+const WIDTH_THRESHOLD = 1200; // block execution if window width is greater than threshold (px)
 
 "use strict";
 if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH_THRESHOLD) {
+	function getFieldSize() {
+		const elements = document.querySelectorAll('[id^="place_"]');
+		let minX = -1, maxX = 1;
+		let minY = -1, maxY = 1;
+
+		elements.forEach(el => {
+			const match = el.id.match(/^place_(-?\d+)x(-?\d+)$/);
+			if (match) {
+				const x = parseInt(match[1]);
+				const y = parseInt(match[2]);
+
+				if (!isNaN(x) && !isNaN(y)) {
+					minX = Math.min(minX, x);
+					maxX = Math.max(maxX, x);
+					minY = Math.min(minY, y);
+					maxY = Math.max(maxY, y);
+				}
+			}
+		});
+
+		const edge = parseInt(elements[0].style.width);
+		return [maxX - minX + 1, maxY - minY + 1, edge];
+	}
+
 	function setMapHeight() {
-		let deduction = document.getElementById("map_surface").getBoundingClientRect().top
+		let deduction = document.getElementById("map_surface").getBoundingClientRect().top;
 		if (document.querySelector("#dfBox.horizontal")) {
 			deduction += document.getElementById("dfBox").getBoundingClientRect()["height"];
 		}
@@ -27,7 +49,7 @@ if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH
 		document.getElementById("map_container").style["height"] = `${height}px`;
 	}
 
-	function autoZoom() {
+	function bgaZoom() {
 		const event = new KeyboardEvent("keydown", {
 			key: "End",
 			keyCode: 35,
@@ -35,14 +57,20 @@ if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH
 		document.dispatchEvent(event);
 	}
 
-	const logObserver = new MutationObserver(() => {
-		if (document.getElementById("remainingtiles").innerText < TILES_THRESHOLD) {
+	const mainTitleObserver = new MutationObserver(() => {
+		const [fieldWidth, fieldHeight, edge] = getFieldSize();
+		const mapTop = document.getElementById("map_surface").getBoundingClientRect().top;
+		const maxMapWidth = document.getElementById("map_surface").getBoundingClientRect().right;
+		const maxMapHeight = window.innerHeight - mapTop;
+
+		if (fieldWidth * edge > maxMapWidth || fieldHeight * edge > maxMapHeight) {
 			setMapHeight();
-			setTimeout(() => { autoZoom(); }, ANIMATION_TIME);
+			bgaZoom();
 		}
 	});
 
-	logObserver.observe(document.getElementById("map_scrollable_oversurface"), {
+	mainTitleObserver.observe(document.getElementById("pagemaintitletext"), {
 		childList: true,
+		subtree: false
 	});
 }
