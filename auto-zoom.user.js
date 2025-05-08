@@ -7,12 +7,12 @@
 // @homepageURL  https://github.com/yzemaze/bga-carcassonne-scripts/
 // @supportURL   https://github.com/yzemaze/bga-carcassonne-scripts/issues
 // @downloadURL  https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/auto-zoom.user.js
-// @version      0.3.5
+// @version      0.3.7
 // @author       yzemaze
 // @license      GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // ==/UserScript==
 
-const WIDTH_THRESHOLD = 1200; // block execution if window width is greater than threshold (px)
+const WIDTH_THRESHOLD = 1920; // block execution if window width is greater than threshold (px)
 
 "use strict";
 if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH_THRESHOLD) {
@@ -57,12 +57,25 @@ if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH
 		document.dispatchEvent(event);
 	}
 
-	const mainTitleObserver = new MutationObserver(() => {
-		const mustPlayATile = document.getElementById('titlearg1');
-		if (!mustPlayATile) {
+	function animationDone() {
+		const lastTile = document.querySelector(".tile_last_played");
+		if (!lastTile) {
 			return;
 		}
 
+		const tileLeft = parseInt(lastTile.style["left"]);
+		const tileHeight = parseInt(lastTile.style["height"]);
+		const tileTop = parseInt(lastTile.style["top"]);
+		return (tileLeft % tileHeight == 0 && tileTop % tileHeight == 0);
+	}
+
+	const mainTitleObserver = new MutationObserver(() => {
+		const mustPlayATile = document.getElementById('titlearg1');
+		if (!mustPlayATile || !animationDone()) {
+			return;
+		}
+
+		// only execute after previous move and tile movement animation are done
 		const [fieldWidth, fieldHeight, edge] = getFieldSize();
 		const mapTop = document.getElementById("map_surface").getBoundingClientRect().top;
 		const maxMapWidth = document.getElementById("map_surface").getBoundingClientRect().right;
