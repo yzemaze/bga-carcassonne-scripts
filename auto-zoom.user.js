@@ -7,7 +7,7 @@
 // @homepageURL  https://github.com/yzemaze/bga-carcassonne-scripts/
 // @supportURL   https://github.com/yzemaze/bga-carcassonne-scripts/issues
 // @downloadURL  https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/auto-zoom.user.js
-// @version      0.3.7
+// @version      0.3.8
 // @author       yzemaze
 // @license      GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // ==/UserScript==
@@ -57,6 +57,14 @@ if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH
 		document.dispatchEvent(event);
 	}
 
+	function bgaCenter() {
+		const event = new KeyboardEvent("keydown", {
+			key: "Home",
+			keyCode: 36,
+		});
+		document.dispatchEvent(event);
+	}
+
 	function animationDone() {
 		const lastTile = document.querySelector(".tile_last_played");
 		if (!lastTile) {
@@ -87,8 +95,12 @@ if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH
 		}
 	});
 
-	mainTitleObserver.observe(document.getElementById("pagemaintitletext"), {
-		childList: true,
-		subtree: true
-	});
+	window.onload = (event) => {
+		setMapHeight();
+		bgaCenter();
+		mainTitleObserver.observe(document.getElementById("pagemaintitletext"), {
+			childList: true,
+			subtree: true
+		});
+	};
 }
