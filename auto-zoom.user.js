@@ -7,7 +7,7 @@
 // @homepageURL  https://github.com/yzemaze/bga-carcassonne-scripts/
 // @supportURL   https://github.com/yzemaze/bga-carcassonne-scripts/issues
 // @downloadURL  https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/auto-zoom.user.js
-// @version      0.3.8
+// @version      0.4.0
 // @author       yzemaze
 // @license      GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // ==/UserScript==
@@ -42,8 +42,12 @@ if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH
 
 	function setMapHeight() {
 		let deduction = document.getElementById("map_surface").getBoundingClientRect().top;
-		if (document.querySelector("#dfBox.horizontal")) {
-			deduction += document.getElementById("dfBox").getBoundingClientRect()["height"];
+		let dfBox;
+		if (dfBox = document.getElementById("dfBox")) {
+			const dfBoxBCR = dfBox.getBoundingClientRect();
+			if (document.querySelector("#dfBox.horizontal") || (200 < dfBoxBCR.left && dfBoxBCR.left < 400)) {
+				deduction += dfBoxBCR.height;
+			}
 		}
 		const height = window.innerHeight - deduction;
 		document.getElementById("map_container").style["height"] = `${height}px`;
