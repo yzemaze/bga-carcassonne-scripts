@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name						BGA Carcassonne mobile condensed playerboards
 @description		Mobile version (max. 960px wide windows): Reduce playerboard to 50 % of its height, shrink & move tile in hand to reduce whitespace and enlarge playing area. Hide "you're a spectator"-message. Hide zoom icons if desired.
-@version				0.3.4
+@version				0.3.5
 @author					yzemaze
 @namespace			github.com/yzemaze/
 @homepageURL		https://github.com/yzemaze/bga-carcassonne-scripts/
@@ -16,6 +16,11 @@
 @-moz-document regexp("https://(\w*\.)?boardgamearena.com/.*/carcassonne.*"), regexp("https://(\w*\.)?boardgamearena.com/archive/replay/.*")
 	#topbar
 		display none
+	.bgagame-carcassonne
+		.icon20_rankw
+			display none
+		.gamerank, .gamerank .gamerank_value
+			position inherit
 	.mobile_version .bgagame-carcassonne
 		.pageheader
 			margin 0
@@ -32,19 +37,23 @@
 		#player_boards
 			margin 0 0 0 2px
 		.player-board
-			height 46px
-			box-shadow: 0 3px 4px #0000004d;
-			&.spectator-mode
+			height 41px
+			&.spectator-mode, #current_player_board
 				display none
 			.tile-back-icon
 				height 24px
 				width 24px
 				line-height 24px
 				margin-top -4px
+		.timeToThink
+			z-index 1000
+			background-color #ebd5bd
+			right 45px
+			top 2px
 		.partisan_stock
 			clear none
 			float none
-			top 0
+			top -3px
 			left 0.5em
 			zoom 80%
             .partwrap .partisan
