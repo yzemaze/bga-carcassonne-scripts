@@ -1,13 +1,14 @@
 // ==UserScript==
 // @name         BGA Carcassonne auto-zoom
 // @description  Automatically change map_surface size to maximum available space after each placement and then use BGA’s zoom feature (End button)
-// @match        https://*.boardgamearena.com/*
+// @match        https://*.boardgamearena.com/archive/replay/*
+// @match        https://*.boardgamearena.com/*/carcassonne*
 // @icon         https://x.boardgamearena.net/data/themereleases/231110-1000/img/logo/logo.png
 // @namespace    https://github.com/yzemaze/bga-carcassonne-scripts/
 // @homepageURL  https://github.com/yzemaze/bga-carcassonne-scripts/
 // @supportURL   https://github.com/yzemaze/bga-carcassonne-scripts/issues
 // @downloadURL  https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/auto-zoom.user.js
-// @version      0.4.0
+// @version      0.4.1
 // @author       yzemaze
 // @license      GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // ==/UserScript==
