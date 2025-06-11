@@ -17,7 +17,7 @@
 	#topbar
 		display none
 	.bgagame-carcassonne
-		.icon20_rankw
+		.icon20_rankw, #current_player_board
 			display none
 		.gamerank, .gamerank .gamerank_value
 			position inherit
@@ -38,7 +38,7 @@
 			margin 0 0 0 2px
 		.player-board
 			height 41px
-			&.spectator-mode, #current_player_board
+			&.spectator-mode
 				display none
 			.tile-back-icon
 				height 24px
@@ -46,8 +46,8 @@
 				line-height 24px
 				margin-top -4px
 		.timeToThink
-			z-index 1000
-			background-color #ebd5bd
+			/*z-index 1000
+			background-color #ebd5bd*/
 			right 45px
 			top 2px
 		.partisan_stock
