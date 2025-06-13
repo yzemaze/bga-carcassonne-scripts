@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name						BGA Carcassonne fullscreen
 @description		increase map_container to full height, hide map-moving arrows
-@version				0.1
+@version				0.2
 @author					yzemaze
 @namespace			github.com/yzemaze/
 @homepageURL		https://github.com/yzemaze/bga-carcassonne-scripts/
@@ -9,11 +9,17 @@
 @updateURL			https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/fullscreen.user.styl
 @license				GPLv3
 @preprocessor		stylus
+@var	checkbox	hideArrows						"Hide arrows on the edges of the board"			1
+@var	checkbox	hideScrollmapButtons	"Hide scrollmap button panel"			1
 ==/UserStyle== */
 
 @-moz-document regexp("https://(\w*\.)?boardgamearena.com/.*/carcassonne.*"), regexp("https://(\w*\.)?boardgamearena.com/archive/replay/.*")
 	.bgagame-carcassonne
 		#map_container
 			height 950px
-		#movetop, #moveleft, #moveright, #movedown
-			display none
+		if hideArrows
+			.movetop, .moveleft, .moveright, .movedown
+				display none
+		if hideScrollmapButtons
+			.scrollmap_btns_flex, .scrollmap_btns_divs_wrapper
+				display none

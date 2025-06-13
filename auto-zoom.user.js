@@ -8,7 +8,7 @@
 // @homepageURL  https://github.com/yzemaze/bga-carcassonne-scripts/
 // @supportURL   https://github.com/yzemaze/bga-carcassonne-scripts/issues
 // @downloadURL  https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/auto-zoom.user.js
-// @version      0.4.1
+// @version      0.5.1
 // @author       yzemaze
 // @license      GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // ==/UserScript==
@@ -37,8 +37,11 @@ if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH
 			}
 		});
 
-		const edge = parseInt(elements[0].style.width);
-		return [maxX - minX + 1, maxY - minY + 1, edge];
+		let _a, _b;
+		const defaultEdge = 89;
+		const el = (_a = document.getElementById("map_scrollable")) == null ? void 0 : _a;
+		const scale = (_b = el.style.transform.match(/scale\(([\d\.]+)\)/)) == null ? 1 : parseFloat(_b[1]);
+		return [maxX - minX + 1, maxY - minY + 1, defaultEdge*scale];
 	}
 
 	function setMapHeight() {
@@ -55,40 +58,20 @@ if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH
 	}
 
 	function bgaZoom() {
-		const event = new KeyboardEvent("keydown", {
-			key: "End",
-			keyCode: 35,
-		});
-		document.dispatchEvent(event);
+		document.querySelector("div.zoomtofit.scrollmap_button_wrapper").click();
 	}
 
 	function bgaCenter() {
-		const event = new KeyboardEvent("keydown", {
-			key: "Home",
-			keyCode: 36,
-		});
-		document.dispatchEvent(event);
-	}
-
-	function animationDone() {
-		const lastTile = document.querySelector(".tile_last_played");
-		if (!lastTile) {
-			return;
-		}
-
-		const tileLeft = parseInt(lastTile.style["left"]);
-		const tileHeight = parseInt(lastTile.style["height"]);
-		const tileTop = parseInt(lastTile.style["top"]);
-		return (tileLeft % tileHeight == 0 && tileTop % tileHeight == 0);
+		document.querySelector("div.reset.scrollmap_button_wrapper").click();
 	}
 
 	const mainTitleObserver = new MutationObserver(() => {
 		const mustPlayATile = document.getElementById('titlearg1');
-		if (!mustPlayATile || !animationDone()) {
+		if (!mustPlayATile) {
 			return;
 		}
 
-		// only execute after previous move and tile movement animation are done
+		// only execute after previous move is done
 		const [fieldWidth, fieldHeight, edge] = getFieldSize();
 		const mapTop = document.getElementById("map_surface").getBoundingClientRect().top;
 		const maxMapWidth = document.getElementById("map_surface").getBoundingClientRect().right;
