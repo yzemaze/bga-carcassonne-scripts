@@ -8,7 +8,7 @@
 // @homepageURL   https://github.com/yzemaze/bga-carcassonne-scripts/
 // @supportURL    https://github.com/yzemaze/bga-carcassonne-scripts/issues
 // @downloadURL   https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/toggle-coords.user.js
-// @version       0.2.0
+// @version       0.3.1
 // @author        yzemaze
 // @license       GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // ==/UserScript==
@@ -22,13 +22,14 @@ if (document.querySelector(".bgagame-carcassonne")) {
 			align-items: center;
 			display: flex;
 			justify-content: center;
+			font-size: 11px;
+			flex-direction: column;
 		}
-		.placename {
+		.place-name, .place-count {
 			color: #aaa;
 			display: none;
-			font-size: 11px;
 		}
-		#coords-toggles {
+		#toggleButtons {
 			bottom: 5px;
 			display: flex;
 			flex-direction: column;
@@ -36,7 +37,7 @@ if (document.querySelector(".bgagame-carcassonne")) {
 			left: 5px;
 			position: absolute;
 		}
-		.coords-toggle-btn {
+		.coordsToggleBtn {
 			background: #d3d3d3;
 			border: 1px solid #aaa;
 			border-radius: 8px;
@@ -47,7 +48,7 @@ if (document.querySelector(".bgagame-carcassonne")) {
 			transition: background 0.3s, color 0.3s;
 			width: 85px;
 		}
-		.coords-toggle-btn.active {
+		.coordsToggleBtn.active {
 			background: #89b58b;
 			border-color: #74a476;
 			color: white;
@@ -79,10 +80,10 @@ if (document.querySelector(".bgagame-carcassonne")) {
 		{
 			id: "coordsOn",
 			content: `
-				.placename {
+				.place-name {
 					display: flex;
 				}
-				.place.disabled > .placename {
+				.place.disabled > .place-name {
 					display: flex;
 					color: #666;
 				}
@@ -99,6 +100,28 @@ if (document.querySelector(".bgagame-carcassonne")) {
 					box-shadow: inset 0px 0px 0px 1px #777;
 				}
 			`
+		},
+		{
+			id: "countsOn",
+			content: `
+				.place-count {
+					display: flex;
+				}
+				.place.disabled > .place-count {
+					display: flex;
+					color: #666;
+				}
+			`
+		},
+				{
+			id: "deadsOn",
+			content: `
+				.place:has(.dead) {
+					background-color: rgba(255,0,0,0.1) !important;
+					background-image: none;
+					opacity: 1 !important;
+				}
+			`
 		}
 	];
 
@@ -113,44 +136,46 @@ if (document.querySelector(".bgagame-carcassonne")) {
 		return el;
 	}
 
+	function createToggle(id, cssSetId, caption, captionActive) {
+		const button = document.createElement("button");
+		button.id = id;
+		button.className = "coordsToggleBtn";
+		button.textContent = caption;
+		button.onclick = () => {
+			const active = button.classList.toggle("active");
+			button.textContent = active ? captionActive : caption;
+			toggleStyle(cssSets[cssSetId].id, cssSets[cssSetId].content);
+		}
+		return button;
+	}
+
 	function addToggles() {
 		const toggleDiv = document.createElement("div");
-		toggleDiv.id = "coords-toggles";
+		toggleDiv.id = "toggleButtons";
 
-		const coordsToggle = document.createElement("button");
-		coordsToggle.textContent = "Show Coords";
-		coordsToggle.className = "coords-toggle-btn";
-		coordsToggle.onclick = () => {
-			const active = coordsToggle.classList.toggle("active");
-			coordsToggle.textContent = active ? "Hide Coords" : "Show Coords";
-			toggleStyle(cssSets[0].id, cssSets[0].content);
-		};
-
-		const disabledTilesToggle = document.createElement("button");
-		disabledTilesToggle.textContent = "Show disabled";
-		disabledTilesToggle.className = "coords-toggle-btn";
-		disabledTilesToggle.onclick = () => {
-			const active = disabledTilesToggle.classList.toggle("active");
-			disabledTilesToggle.textContent = active ? "Hide disabled" : "Show disabled";
-			toggleStyle(cssSets[1].id, cssSets[1].content);
-		};
+		const countToggle = createToggle("count-toggle", 2, "Show Count", "Hide Count");
+		const coordsToggle = createToggle("coords-toggle", 0, "Show Coords", "Hide Coords");
+		const disabledTilesToggle = createToggle("disabled-tiles-toggle", 1, "Show disabled", "Hide disabled");
+		const deadPlacesToggle = createToggle("dead-places-toggle", 3, "Show dead", "Hide dead");
 
 		const slider = document.createElement("input");
 		slider.type = "range";
 		slider.id = "slider";
 		slider.className = "slider";
-		slider.min = 8;
-		slider.max = 24;
+		slider.min = 0;
+		slider.max = 40;
 		slider.value = 12;
 		slider.width = "100%";
 
-		const placenameStyle = createStyleElement("placename-style", "");
+		const placeStyle = createStyleElement("place-style", "");
 		slider.oninput = () => {
-			placenameStyle.textContent = `.placename { font-size: ${slider.value}px; }`;
+			placeStyle.textContent = `.place { font-size: ${slider.value}px; }`;
 		}
 
+		toggleDiv.appendChild(countToggle);
 		toggleDiv.appendChild(coordsToggle);
 		toggleDiv.appendChild(disabledTilesToggle);
+		toggleDiv.appendChild(deadPlacesToggle);
 		toggleDiv.appendChild(slider);
 		document.getElementById("map_container").appendChild(toggleDiv);
 	}
@@ -169,7 +194,7 @@ if (document.querySelector(".bgagame-carcassonne")) {
 		let span = document.getElementById(spanId);
 		if (!span) {
 			span = document.createElement("span");
-			span.className = "placename";
+			span.className = "place-name";
 			span.id = spanId;
 			const coords = place.id.match(/(-?\d+)x(-?\d+)/);
 			span.textContent = `${coords[1]}, ${-1 * parseInt(coords[2])}`;
