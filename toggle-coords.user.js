@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          BGA Carcassonne coordinates
-// @description   Adds toggles to display  coordinates in legal placement spots and show currently hidden spots as well.
+// @description   Adds toggles to display coordinates in legal placement spots and show currently hidden spots as well. Additional toggles for counts and dead tiles are not functional without another script.
 // @match         https://*.boardgamearena.com/archive/replay/*
 // @match         https://*.boardgamearena.com/*/carcassonne*
 // @icon          https://x.boardgamearena.net/data/themereleases/231110-1000/img/logo/logo.png
@@ -8,7 +8,7 @@
 // @homepageURL   https://github.com/yzemaze/bga-carcassonne-scripts/
 // @supportURL    https://github.com/yzemaze/bga-carcassonne-scripts/issues
 // @downloadURL   https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/toggle-coords.user.js
-// @version       0.3.1
+// @version       0.3.2
 // @author        yzemaze
 // @license       GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // ==/UserScript==
@@ -22,7 +22,7 @@ if (document.querySelector(".bgagame-carcassonne")) {
 			align-items: center;
 			display: flex;
 			justify-content: center;
-			font-size: 11px;
+			font-size: 16px;
 			flex-direction: column;
 		}
 		.place-name, .place-count {
@@ -136,14 +136,13 @@ if (document.querySelector(".bgagame-carcassonne")) {
 		return el;
 	}
 
-	function createToggle(id, cssSetId, caption, captionActive) {
+	function createToggle(id, cssSetId, caption) {
 		const button = document.createElement("button");
 		button.id = id;
 		button.className = "coordsToggleBtn";
 		button.textContent = caption;
 		button.onclick = () => {
 			const active = button.classList.toggle("active");
-			button.textContent = active ? captionActive : caption;
 			toggleStyle(cssSets[cssSetId].id, cssSets[cssSetId].content);
 		}
 		return button;
@@ -153,18 +152,18 @@ if (document.querySelector(".bgagame-carcassonne")) {
 		const toggleDiv = document.createElement("div");
 		toggleDiv.id = "toggleButtons";
 
-		const countToggle = createToggle("count-toggle", 2, "Show Count", "Hide Count");
-		const coordsToggle = createToggle("coords-toggle", 0, "Show Coords", "Hide Coords");
-		const disabledTilesToggle = createToggle("disabled-tiles-toggle", 1, "Show disabled", "Hide disabled");
-		const deadPlacesToggle = createToggle("dead-places-toggle", 3, "Show dead", "Hide dead");
+		const countToggle = createToggle("count-toggle", 2, "count");
+		const coordsToggle = createToggle("coords-toggle", 0, "coords");
+		const disabledTilesToggle = createToggle("disabled-tiles-toggle", 1, "disabled");
+		const deadPlacesToggle = createToggle("dead-places-toggle", 3, "dead");
 
 		const slider = document.createElement("input");
 		slider.type = "range";
 		slider.id = "slider";
 		slider.className = "slider";
 		slider.min = 0;
-		slider.max = 40;
-		slider.value = 12;
+		slider.max = 48;
+		slider.value = 16;
 		slider.width = "100%";
 
 		const placeStyle = createStyleElement("place-style", "");
