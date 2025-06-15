@@ -8,7 +8,7 @@
 // @homepageURL   https://github.com/yzemaze/bga-carcassonne-scripts/
 // @supportURL    https://github.com/yzemaze/bga-carcassonne-scripts/issues
 // @downloadURL   https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/highlight-discards.user.js
-// @version       0.3.1
+// @version       0.4.0
 // @author        yzemaze
 // @license       GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // ==/UserScript==
@@ -31,33 +31,37 @@ if (document.querySelector(".bgagame-carcassonne")) {
 	const highlightColor = "yellow";
 	// CONFIG END
 
+	let style = document.createElement("style");
+	style.id = "discardStyle";
+	style.innerHTML = `
+		#discard_block {
+			display: none;
+			align-items: center;
+		}
+		#discard_block .tile_art {
+			display: inline-block;
+			position: relative;
+			margin: 0 0 0 2px;
+			height: 40px !important;
+			width: 40px !important;
+		}
+	`;
+	document.head.append(style);
+
 	const discardDiv = document.createElement("div");
-	discardDiv.setAttribute("id", "discard_block");
-	discardDiv.style.display = "none";
+	discardDiv.id = "discard_block";
 	const discardSpan = document.createElement("span");
 	discardSpan.append(discardText);
-	const discardStyle = {
-		display: "inline-block",
-		position: "relative",
-		left: "auto",
-		top: "5px",
-		margin: "2px 0 0 2px",
-	};
 
 	const logObserver = new MutationObserver(() => {
-		discardDiv.textContent = '';
+		discardDiv.textContent = "";
 		discardDiv.append(discardSpan);
 		const logMsgs = document.getElementsByClassName("log_replayable");
 		for (const logMsg of logMsgs) {
 			if (discardMsgs.some(d => logMsg.textContent.includes(d))) {
 				logMsg.childNodes[0].setAttribute("style", `background-color: ${highlightColor};`);
 				const discardTile = logMsg.getElementsByClassName("tile_art")[0].cloneNode(true);
-				Object.assign(discardTile.style, discardStyle);
-				// current tile size changes when zooming
-				const tileSize = document.getElementById("tile_art_current").style.height;
-				discardTile.style.height = tileSize;
-				discardTile.style.width = tileSize;
-				discardDiv.style.display = "block";
+				discardDiv.style.display = "flex";
 				discardDiv.append(discardTile);
 				document.querySelector("#remainingblock").append(discardDiv);
 			}
