@@ -13,14 +13,35 @@
 // @license      GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // ==/UserScript==
 
-const WIDTH_THRESHOLD = 1920; // block execution if window width is greater than threshold (px)
-
 "use strict";
+// block execution if window width is greater than threshold (px)
+const WIDTH_THRESHOLD = 1920;
+// keep n px clear space around the map for superimposed images, scoreboards, cameras etc.
+// use negative values to force empty spaces being cut off or (partially) invisible
+const MARGIN = {
+	top: 100,
+	right: 50,
+	bottom: 50,
+	left: 50
+}
+const AUTO_CENTER = true;
+
 if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH_THRESHOLD) {
+
+	function createStyleElement(id, content) {
+		let el = document.getElementById(id);
+		if (!el) {
+			el = document.createElement("style");
+			el.id = id;
+			el.textContent = content;
+			document.head.appendChild(el);
+		}
+		return el;
+	}
+
 	function getFieldSize() {
 		const elements = document.querySelectorAll('[id^="place_"]');
-		let minX = -1, maxX = 1;
-		let minY = -1, maxY = 1;
+		let minX = -1, maxX = 1, minY = -1, maxY = 1;
 
 		elements.forEach(el => {
 			const match = el.id.match(/^place_(-?\d+)x(-?\d+)$/);
@@ -40,24 +61,38 @@ if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH
 		let _a, _b;
 		const defaultEdge = 89;
 		const el = (_a = document.getElementById("map_scrollable")) == null ? void 0 : _a;
-		const scale = (_b = el.style.transform.match(/scale\(([\d\.]+)\)/)) == null ? 1 : parseFloat(_b[1]);
+		const scale = (_b = el.style.transform.match(/scale\((\d+(\.\d+)?)\)/)) == null ? 1 : parseFloat(_b[1]);
 		return [maxX - minX + 1, maxY - minY + 1, defaultEdge*scale];
 	}
 
 	function setMapHeight() {
-		let deduction = document.getElementById("map_surface").getBoundingClientRect().top;
+		const browserZoom = window.devicePixelRatio;
+		const mc = document.getElementById("map_container");
+		const mcBCR = mc.getBoundingClientRect();
+		const deductionX = MARGIN.left + MARGIN.right;
+		let deductionY = MARGIN.bottom + mcBCR.top;
 		let dfBox;
 		if (dfBox = document.getElementById("dfBox")) {
 			const dfBoxBCR = dfBox.getBoundingClientRect();
-			if (document.querySelector("#dfBox.horizontal") || (200 < dfBoxBCR.left && dfBoxBCR.left < 400)) {
-				deduction += dfBoxBCR.height;
+			// keep clear of dfBox if it has horizontal orientation or is in the bottom middle (between cams)
+			if (document.querySelector("#dfBox.horizontal") || (mcBCR.width / 4 < dfBoxBCR.left && dfBoxBCR.top > mcBCR.height * 3/4)) {
+				deductionY += dfBoxBCR.height;
 			}
 		}
-		const height = window.innerHeight - deduction;
-		document.getElementById("map_container").style["height"] = `${height}px`;
+		const height = window.innerHeight - deductionY;
+		const lsBCR = document.getElementById("left-side").getBoundingClientRect();
+		const width = lsBCR.width - deductionX;
+		const mcStyle = createStyleElement("mapContainer-style", "");
+		mcStyle.textContent = `
+			#map_container {
+				--scrollmap_height: ${height}px !important;
+				width: ${width}px;
+			}
+		`;
+		mc.style.margin = `${MARGIN.top}px ${MARGIN.right}px ${MARGIN.bottom}px ${MARGIN.left}px`;
 	}
 
-	function bgaZoom() {
+	function bgaZoomToFit() {
 		document.querySelector("div.zoomtofit.scrollmap_button_wrapper").click();
 	}
 
@@ -73,13 +108,12 @@ if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH
 
 		// only execute after previous move is done
 		const [fieldWidth, fieldHeight, edge] = getFieldSize();
-		const mapTop = document.getElementById("map_surface").getBoundingClientRect().top;
-		const maxMapWidth = document.getElementById("map_surface").getBoundingClientRect().right;
-		const maxMapHeight = window.innerHeight - mapTop;
-
-		if (fieldWidth * edge > maxMapWidth || fieldHeight * edge > maxMapHeight) {
-			setMapHeight();
-			bgaZoom();
+		const mcBCR = document.getElementById("map_container").getBoundingClientRect();
+		setMapHeight();
+		if (fieldWidth * edge > mcBCR.width || fieldHeight * edge > mcBCR.height) {
+			bgaZoomToFit();
+		} else if (AUTO_CENTER) {
+			bgaCenter();
 		}
 	});
 
