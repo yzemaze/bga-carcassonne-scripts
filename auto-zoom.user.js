@@ -78,6 +78,16 @@ if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH
 			if (document.querySelector("#dfBox.horizontal") || (mcBCR.width / 4 < dfBoxBCR.left && dfBoxBCR.top > mcBCR.height * 3/4)) {
 				deductionY += dfBoxBCR.height;
 			}
+			// create backdrop for dfBox with same background as mapContainer
+			// move toggle buttons there, too
+			let mapFooter;
+			if (!(mapFooter = document.getElementById("yzMapFooter"))) {
+				mapFooter = document.createElement("div");
+				mapFooter.id = "yzMapFooter";
+				mapFooter.style.height = `${dfBoxBCR.height}px`;
+				const pageContent = document.getElementById("page-content");
+				pageContent.appendChild(mapFooter);
+			}
 		}
 		const height = window.innerHeight - deductionY;
 		const lsBCR = document.getElementById("left-side").getBoundingClientRect();
