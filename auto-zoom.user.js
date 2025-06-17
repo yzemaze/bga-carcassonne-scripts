@@ -19,10 +19,10 @@ const WIDTH_THRESHOLD = 1920;
 // keep n px clear space around the map for superimposed images, scoreboards, cameras etc.
 // use negative values to force empty spaces being cut off or (partially) invisible
 const MARGIN = {
-	top: 100,
-	right: 50,
-	bottom: 50,
-	left: 50
+	top: 0,
+	right: 0,
+	bottom: 0,
+	left: 0
 }
 const AUTO_CENTER = true;
 
@@ -38,6 +38,13 @@ if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH
 		}
 		return el;
 	}
+
+	const hideScrollButtons = createStyleElement("yzHideScrollButtonsStyle", `
+		.scrollmap_icon[class^=move] {
+			display: none !important;
+		}
+	`);
+
 
 	function getFieldSize() {
 		const elements = document.querySelectorAll('[id^="place_"]');
@@ -92,14 +99,13 @@ if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH
 		const height = window.innerHeight - deductionY;
 		const lsBCR = document.getElementById("left-side").getBoundingClientRect();
 		const width = lsBCR.width - deductionX;
-		const mcStyle = createStyleElement("mapContainer-style", "");
-		mcStyle.textContent = `
+		const mcStyle = createStyleElement("yzMapContainerStyle", `
 			#map_container {
 				--scrollmap_height: ${height}px !important;
 				width: ${width}px;
+				margin: ${MARGIN.top}px ${MARGIN.right}px ${MARGIN.bottom}px ${MARGIN.left}px;
 			}
-		`;
-		mc.style.margin = `${MARGIN.top}px ${MARGIN.right}px ${MARGIN.bottom}px ${MARGIN.left}px`;
+		`);
 	}
 
 	function bgaZoomToFit() {
