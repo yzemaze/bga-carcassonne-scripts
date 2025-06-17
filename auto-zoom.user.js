@@ -8,7 +8,7 @@
 // @homepageURL  https://github.com/yzemaze/bga-carcassonne-scripts/
 // @supportURL   https://github.com/yzemaze/bga-carcassonne-scripts/issues
 // @downloadURL  https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/auto-zoom.user.js
-// @version      0.5.1
+// @version      0.5.3
 // @author       yzemaze
 // @license      GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // ==/UserScript==
@@ -39,13 +39,6 @@ if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH
 		return el;
 	}
 
-	const hideScrollButtons = createStyleElement("yzHideScrollButtonsStyle", `
-		.scrollmap_icon[class^=move] {
-			display: none !important;
-		}
-	`);
-
-
 	function getFieldSize() {
 		const elements = document.querySelectorAll('[id^="place_"]');
 		let minX = -1, maxX = 1, minY = -1, maxY = 1;
@@ -72,6 +65,49 @@ if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH
 		return [maxX - minX + 1, maxY - minY + 1, defaultEdge*scale];
 	}
 
+	function moveScrollmapButtons(parentEl) {
+		const scrollmapBtns = document.getElementById("map_container_info").parentElement;
+		if (scrollmapBtns) {
+			if (scrollmapBtns.dataset.moved === true) return;
+			parentEl.appendChild(scrollmapBtns);
+			createStyleElement("yzScrollMapBtnStyle", `
+				.scrollmap_icon {
+					background-color: transparent;
+				}
+				svg.maximize-height {
+					height: 15px;
+					width: 15px;
+				}
+				#yzMapFooter .scrollmap_btns_flex {
+					display: grid;
+					grid-template-columns: repeat(6, 1fr);
+					grid-gap: 5px;
+					padding: 10px;
+					width: min-content;
+				}
+				#yzMapFooter #map_container_info {
+					display: none;
+				}
+				#yzMapFooter svg.maximize_height {
+					height: 20px;
+				}
+				#yzMapFooter div.scrollmap_button_wrapper:nth-child(n+8):nth-child(-n+11) {
+					grid-row-start: 2;
+					grid-column: span 1;
+				}
+				#yzMapFooter div.scrollmap_button_wrapper:nth-child(n+12):nth-child(-n+15) {
+					grid-row-start: 3;
+					grid-column: span 1;
+				}
+				#yzFontSizeSlider {
+					grid-row-start: 3;
+					grid-column: span 2;
+				}
+			`);
+			scrollmapBtns.dataset.moved = true;
+		}
+	}
+
 	function setMapHeight() {
 		const browserZoom = window.devicePixelRatio;
 		const mc = document.getElementById("map_container");
@@ -92,6 +128,7 @@ if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH
 				mapFooter = document.createElement("div");
 				mapFooter.id = "yzMapFooter";
 				mapFooter.style.height = `${dfBoxBCR.height}px`;
+				moveScrollmapButtons(mapFooter);
 				const pageContent = document.getElementById("page-content");
 				pageContent.appendChild(mapFooter);
 			}
@@ -99,13 +136,15 @@ if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH
 		const height = window.innerHeight - deductionY;
 		const lsBCR = document.getElementById("left-side").getBoundingClientRect();
 		const width = lsBCR.width - deductionX;
-		const mcStyle = createStyleElement("yzMapContainerStyle", `
+		const mcStyle = createStyleElement("yzMapContainerStyle");
+		// vars might change => set outside of creation
+		mcStyle.textContent = `
 			#map_container {
+				margin: ${MARGIN.top}px ${MARGIN.right}px ${MARGIN.bottom}px ${MARGIN.left}px;
 				--scrollmap_height: ${height}px !important;
 				width: ${width}px;
-				margin: ${MARGIN.top}px ${MARGIN.right}px ${MARGIN.bottom}px ${MARGIN.left}px;
 			}
-		`);
+		`;
 	}
 
 	function bgaZoomToFit() {
