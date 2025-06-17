@@ -10,7 +10,7 @@ Some improvements of BGA’s Carcassonne UI.
 5. <a href="https://github.com/yzemaze/bga-scripts/raw/main/starting-player-tag.user.js">Starting player icon</a> (obsolete for Carcassonne since update 07/2024).
 
 ## More useful scripts
-1. Replace second edition tiles everywhere with the <a href="https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/original-tiles.user.styl">original tiles</a>.
+1. <a href="https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/original-tiles.user.styl">Original tiles</a> everywhere, even in replays!
 2. [Carcassonne tile draw probabilities](https://github.com/yzemaze/carcassonne-probabilities)
 3. [BGA duel finder](https://github.com/yzemaze/bga-duel-finder)
 4. <a href="https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/mobile-condensed-playerboards.user.styl">Shrink playerboards on mobile devices</a> or smaller windows (<= 960 px). (With 640 px wide windows you can watch all duels of a WTCOC match on 2 screens. ;) )
