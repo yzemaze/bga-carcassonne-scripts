@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name          BGA Carcassonne coordinates
+// @name          BGA Carcassonne coordinates and other toggles
 // @description   Adds toggles to display coordinates in legal placement spots and show currently hidden spots as well. Additional toggles for counts and dead tiles are not functional without another script.
 // @match         https://*.boardgamearena.com/archive/replay/*
 // @match         https://*.boardgamearena.com/*/carcassonne*
@@ -8,7 +8,7 @@
 // @homepageURL   https://github.com/yzemaze/bga-carcassonne-scripts/
 // @supportURL    https://github.com/yzemaze/bga-carcassonne-scripts/issues
 // @downloadURL   https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/toggle-coords.user.js
-// @version       0.3.2
+// @version       0.4.0
 // @author        yzemaze
 // @license       GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // ==/UserScript==
@@ -25,35 +25,22 @@ if (document.querySelector(".bgagame-carcassonne")) {
 			font-size: 16px;
 			flex-direction: column;
 		}
-		.place-name, .place-count {
+		.placeName, .place-count {
 			color: #aaa;
 			display: none;
 		}
-		#toggleButtons {
-			bottom: 5px;
+		.yzToggleBtn {
+			filter: unset;
+			opacity: 0.3;
+		}
+		.yzToggleBtn.active {
+			opacity: 1;
+		}
+		#yzFontSizeSlider {
 			display: flex;
-			flex-direction: column;
-			gap: 5px;
-			left: 5px;
-			position: absolute;
+			align-items: center;
 		}
-		.coordsToggleBtn {
-			background: #d3d3d3;
-			border: 1px solid #aaa;
-			border-radius: 8px;
-			color: #333;
-			cursor: pointer;
-			font-size: 11px;
-			padding: 3px;
-			transition: background 0.3s, color 0.3s;
-			width: 85px;
-		}
-		.coordsToggleBtn.active {
-			background: #89b58b;
-			border-color: #74a476;
-			color: white;
-		}
-		.slider {
+		#yzFontSizeSlider .slider {
 			-webkit-appearance: none;
 			appearance: none;
 			height: 1em;
@@ -62,16 +49,22 @@ if (document.querySelector(".bgagame-carcassonne")) {
 			outline: none;
 			-webkit-transition: .2s;
 			transition: opacity .2s;
-			width: 85px;
+			width: 100%;
 		}
-		.slider::-webkit-slider-thumb, .slider::-moz-range-thumb {
+		#yzFontSizeSlider .slider::-webkit-slider-thumb, #yzFontSizeSlider .slider::-moz-range-thumb {
 			-webkit-appearance: none;
 			appearance: none;
-			background: #89b58b;
+			background: #000;
 			border-color: #74a476;
 			cursor: pointer;
 			height: 1em;
 			width: 1em;
+		}
+		.scrollmap_btns_left .scrollmap_btns_flex, .scrollmap_btns_right .scrollmap_btns_flex {
+			max-width: min-content !important;
+		}
+		.scrollmap_btns_top .slider {
+			max-width: 60px;
 		}
 	`;
 	document.head.appendChild(baseStyle);
@@ -80,10 +73,10 @@ if (document.querySelector(".bgagame-carcassonne")) {
 		{
 			id: "coordsOn",
 			content: `
-				.place-name {
+				.placeName {
 					display: flex;
 				}
-				.place.disabled > .place-name {
+				.place.disabled > .placeName {
 					display: flex;
 					color: #666;
 				}
@@ -136,47 +129,47 @@ if (document.querySelector(".bgagame-carcassonne")) {
 		return el;
 	}
 
-	function createToggle(id, cssSetId, caption) {
-		const button = document.createElement("button");
+	function createToggle(id, cssSetId, caption, faIcon) {
+		const button = document.createElement("div");
 		button.id = id;
-		button.className = "coordsToggleBtn";
-		button.textContent = caption;
+		button.className = "yzToggleBtn scrollmap_button_wrapper";
 		button.onclick = () => {
 			const active = button.classList.toggle("active");
 			toggleStyle(cssSets[cssSetId].id, cssSets[cssSetId].content);
 		}
+		const icon = document.createElement("i");
+		icon.className = "scrollmap_icon fa6-solid";
+		icon.classList.add(faIcon);
+		icon.title = caption;
+		button.appendChild(icon);
 		return button;
 	}
 
-	function addToggles() {
-		const toggleDiv = document.createElement("div");
-		toggleDiv.id = "toggleButtons";
+	async function addToggles() {
+		const scrollBtnsHelp = await waitForElement("#map_container_info");
+		const scrollmapBtns = scrollBtnsHelp.parentElement;
 
-		const countToggle = createToggle("count-toggle", 2, "count");
-		const coordsToggle = createToggle("coords-toggle", 0, "coords");
-		const disabledTilesToggle = createToggle("disabled-tiles-toggle", 1, "disabled");
-		const deadPlacesToggle = createToggle("dead-places-toggle", 3, "dead");
+		const countToggle = createToggle("countToggle", 2, "count", "fa6-hashtag");
+		const coordsToggle = createToggle("coordsToggle", 0, "coords", "fa6-map");
+		const disabledTilesToggle = createToggle("disabledTilesToggle", 1, "disabled", "fa6-eye-slash");
+		const deadPlacesToggle = createToggle("deadPlacesToggle", 3, "dead", "fa6-skull");
 
+		const sliderDiv = document.createElement("div");
+		sliderDiv.id = "yzFontSizeSlider";
 		const slider = document.createElement("input");
 		slider.type = "range";
-		slider.id = "slider";
 		slider.className = "slider";
 		slider.min = 0;
 		slider.max = 48;
 		slider.value = 16;
-		slider.width = "100%";
+		sliderDiv.appendChild(slider);
 
-		const placeStyle = createStyleElement("place-style", "");
+		const placeStyle = createStyleElement("placeStyle", "");
 		slider.oninput = () => {
 			placeStyle.textContent = `.place { font-size: ${slider.value}px; }`;
 		}
 
-		toggleDiv.appendChild(countToggle);
-		toggleDiv.appendChild(coordsToggle);
-		toggleDiv.appendChild(disabledTilesToggle);
-		toggleDiv.appendChild(deadPlacesToggle);
-		toggleDiv.appendChild(slider);
-		document.getElementById("map_container").appendChild(toggleDiv);
+		scrollmapBtns.append(countToggle, coordsToggle, disabledTilesToggle, deadPlacesToggle, sliderDiv);
 	}
 
 	function toggleStyle(id, cssContent) {
@@ -193,7 +186,7 @@ if (document.querySelector(".bgagame-carcassonne")) {
 		let span = document.getElementById(spanId);
 		if (!span) {
 			span = document.createElement("span");
-			span.className = "place-name";
+			span.className = "placeName";
 			span.id = spanId;
 			const coords = place.id.match(/(-?\d+)x(-?\d+)/);
 			span.textContent = `${coords[1]}, ${-1 * parseInt(coords[2])}`;
