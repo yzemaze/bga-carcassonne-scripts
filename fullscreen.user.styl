@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name						BGA Carcassonne fullscreen
 @description		increase map_container to full height, hide map-moving arrows
-@version				0.2
+@version				0.2.1
 @author					yzemaze
 @namespace			github.com/yzemaze/
 @homepageURL		https://github.com/yzemaze/bga-carcassonne-scripts/
@@ -18,8 +18,9 @@
 		#map_container
 			height 950px
 		if hideArrows
-			.movetop, .moveleft, .moveright, .movedown
+			.scrollmap_icon[class^=move]
 				display none
 		if hideScrollmapButtons
-			.scrollmap_btns_flex, .scrollmap_btns_divs_wrapper
-				display none
+			#map_container
+				.scrollmap_btns_flex, .scrollmap_btns_divs_wrapper
+					display none
