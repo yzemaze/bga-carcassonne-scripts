@@ -17,13 +17,14 @@ Some improvements of BGA’s Carcassonne UI.
 5. [Replay to top-carcassonner.com](https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/replay-to-top-carcassonner.user.js)
 6. <a href="https://github.com/yzemaze/bga-scripts/raw/main/replay-with-keys.user.js">keyboard support for replays</a>
 7. <a href="https://github.com/yzemaze/bga-scripts/raw/main/game-logs-decluttered.user.styl">decluttered game logs</a> (say goodbye to friends’ status spam …)
-
+8. <a href="https://github.com/yzemaze/bga-scripts/raw/main/toggle-coords.user.js">show coordinates</a> in empty spaces. Useful for notation purposes or just to talk with others about a game and be able to pinpoint positions. Buttons are added to BGA’s scrollmap button panel.
+9. <a href="https://github.com/yzemaze/bga-scripts/raw/main/auto-zoom.user.js">auto center & zoom</a> if you’re tired of zooming yourself. This script fires once per move. Setting (top, right, bottom, left) margins for the map-container is supported, so it only ever expands to a defined size and stays clear of specific areas.
 
 ## Prerequisites
-<a href="https://violentmonkey.github.io/">Violentmonkey</a> or the like for .user.js-files. <a href="/highlight-discards.user.js">highlight-discards.user.js</a> has a tiny config section. Please edit the discard string according to the language you use on BGA.
+<a href="https://violentmonkey.github.io/">Violentmonkey</a> (Tampermonkey, Greasemonkey) or any other way to execute .user.js-files. Some scripts have a tiny config section. Please check the source after the UserStyle section during installation. E.g. <a href="/highlight-discards.user.js">highlight-discards.user.js</a> needs the discard string of the language you use on BGA.
 <a href="https://github.com/openstyles/stylus#readme">Stylus</a> or some other way to apply .user.styl-files. Config is done within Stylus:
 
 ![screenshot-stylus.png](/img/screenshot-stylus.png?raw=true)
 
 ## Problems? Ideas?
-All scripts were designed and tested for 2p-Carcassonne without expansions. They should work fine with more players and expansions, though. Some edges might still be rough (cf. version numbers ;) ). So if you encounter any problems please let me know. Either open an issue or contact me on BGA. Same goes if you’d like to see specific improvements.
+All scripts were designed and tested for 2p-Carcassonne without expansions. Most should work fine with more players and expansions, though. Some edges might still be rough (cf. version numbers ;) ). If you encounter any problems please let me know. Either open an issue or contact me on BGA. Same goes if you’d like to see specific improvements.
