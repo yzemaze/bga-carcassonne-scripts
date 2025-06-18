@@ -8,7 +8,7 @@
 // @homepageURL  https://github.com/yzemaze/bga-carcassonne-scripts/
 // @supportURL   https://github.com/yzemaze/bga-carcassonne-scripts/issues
 // @downloadURL  https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/auto-zoom.user.js
-// @version      0.5.9
+// @version      0.5.10
 // @author       yzemaze
 // @license      GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // ==/UserScript==
@@ -93,11 +93,11 @@ if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH
 				#yzMapFooter svg.maximize_height {
 					height: 20px;
 				}
-				#yzMapFooter div.scrollmap_button_wrapper:nth-child(n+8):nth-child(-n+11) {
+				#yzMapFooter div.scrollmap_button_wrapper:nth-child(n+9):nth-child(-n+12) {
 					grid-row-start: 2;
 					grid-column: span 1;
 				}
-				#yzMapFooter div.scrollmap_button_wrapper:nth-child(n+12):nth-child(-n+15) {
+				#yzMapFooter div.scrollmap_button_wrapper:nth-child(n+13):nth-child(-n+16) {
 					grid-row-start: 3;
 					grid-column: span 1;
 				}
