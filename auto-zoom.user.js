@@ -8,7 +8,7 @@
 // @homepageURL  https://github.com/yzemaze/bga-carcassonne-scripts/
 // @supportURL   https://github.com/yzemaze/bga-carcassonne-scripts/issues
 // @downloadURL  https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/auto-zoom.user.js
-// @version      0.5.6
+// @version      0.5.7
 // @author       yzemaze
 // @license      GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // ==/UserScript==
@@ -127,11 +127,10 @@ if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH
 	}
 
 	function addToggle() {
-		const scrollBtnsHelp = document.getElementById("map_container_info");
-		const scrollmapBtns = scrollBtnsHelp.parentElement;
+		const zoomToFit = document.querySelector(".zoomtofit.scrollmap_button_wrapper");
 		const zoomToggle = createToggle("zoomToggle", "auto-zoom", "fa6-wand-sparkles");
 		zoomToggle.classList.toggle("active");
-		scrollmapBtns.append(zoomToggle);
+		zoomToFit.after(zoomToggle);
 	}
 
 	function setMapHeight() {
