@@ -8,7 +8,7 @@
 // @homepageURL  https://github.com/yzemaze/bga-carcassonne-scripts/
 // @supportURL   https://github.com/yzemaze/bga-carcassonne-scripts/issues
 // @downloadURL  https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/auto-zoom.user.js
-// @version      0.5.7
+// @version      0.5.9
 // @author       yzemaze
 // @license      GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // ==/UserScript==
@@ -119,8 +119,7 @@ if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH
 			const active = button.classList.toggle("active");
 		}
 		const icon = document.createElement("i");
-		icon.className = "scrollmap_icon fa6-solid";
-		icon.classList.add(faIcon);
+		icon.classList.add("scrollmap_icon", "fa6-solid", faIcon);
 		icon.title = caption;
 		button.appendChild(icon);
 		return button;
