@@ -8,7 +8,7 @@
 // @homepageURL  https://github.com/yzemaze/bga-carcassonne-scripts/
 // @supportURL   https://github.com/yzemaze/bga-carcassonne-scripts/issues
 // @downloadURL  https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/auto-zoom.user.js
-// @version      0.5.3
+// @version      0.5.5
 // @author       yzemaze
 // @license      GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // ==/UserScript==
@@ -79,6 +79,8 @@ if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH
 					width: 15px;
 				}
 				#yzMapFooter .scrollmap_btns_flex {
+					position: fixed;
+					bottom: 0;
 					display: grid;
 					grid-template-columns: repeat(6, 1fr);
 					grid-gap: 5px;
@@ -106,6 +108,29 @@ if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH
 			`);
 			scrollmapBtns.dataset.moved = true;
 		}
+	}
+
+	function createToggle(id, caption, faIcon) {
+		const button = document.createElement("div");
+		button.id = id;
+		button.className = "yzToggleBtn scrollmap_button_wrapper";
+		button.onclick = () => {
+			const active = button.classList.toggle("active");
+		}
+		const icon = document.createElement("i");
+		icon.className = "scrollmap_icon fa6-solid";
+		icon.classList.add(faIcon);
+		icon.title = caption;
+		button.appendChild(icon);
+		return button;
+	}
+
+	function addToggle() {
+		const scrollBtnsHelp = document.getElementById("map_container_info");
+		const scrollmapBtns = scrollBtnsHelp.parentElement;
+		const zoomToggle = createToggle("zoomToggle", "auto-zoom", "fa6-wand-sparkles");
+		zoomToggle.classList.toggle("active");
+		scrollmapBtns.append(zoomToggle);
 	}
 
 	function setMapHeight() {
@@ -156,8 +181,8 @@ if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH
 	}
 
 	const mainTitleObserver = new MutationObserver(() => {
-		const mustPlayATile = document.getElementById('titlearg1');
-		if (!mustPlayATile) {
+		const mustPlayATile = document.getElementById("titlearg1");
+		if (!mustPlayATile || !document.getElementById("zoomToggle").classList.contains("active")) {
 			return;
 		}
 
@@ -175,6 +200,7 @@ if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH
 	window.onload = (event) => {
 		setMapHeight();
 		bgaCenter();
+		addToggle();
 		mainTitleObserver.observe(document.getElementById("pagemaintitletext"), {
 			childList: true,
 			subtree: true
