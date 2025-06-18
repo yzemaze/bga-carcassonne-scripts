@@ -18,7 +18,7 @@ Some improvements of BGA’s Carcassonne UI.
 6. <a href="https://github.com/yzemaze/bga-scripts/raw/main/replay-with-keys.user.js">keyboard support for replays</a>
 7. <a href="https://github.com/yzemaze/bga-scripts/raw/main/game-logs-decluttered.user.styl">decluttered game logs</a> (say goodbye to friends’ status spam …)
 8. <a href="https://github.com/yzemaze/bga-scripts/raw/main/toggle-coords.user.js">show coordinates</a> in empty spaces. Useful for notation purposes or just to talk with others about a game and be able to pinpoint positions. Buttons are added to BGA’s scrollmap button panel.
-9. <a href="https://github.com/yzemaze/bga-scripts/raw/main/auto-zoom.user.js">auto center & zoom</a> if you’re tired of zooming yourself. This script fires once per move. Setting (top, right, bottom, left) margins for the map-container is supported, so it only ever expands to a defined size and stays clear of specific areas.
+9. <a href="https://github.com/yzemaze/bga-scripts/raw/main/auto-zoom.user.js">auto center & zoom</a> if you’re tired of zooming yourself. This script fires once per move and it’s possible to deactivate it from BGA’s scrollmap button panel. Setting (top, right, bottom, left) margins for the map-container is supported, so the playing area would only ever expand to a defined size staying clear of specific areas defined by you.
 
 ## Prerequisites
 <a href="https://violentmonkey.github.io/">Violentmonkey</a> (Tampermonkey, Greasemonkey) or any other way to execute .user.js-files. Some scripts have a tiny config section. Please check the source after the UserStyle section during installation. E.g. <a href="/highlight-discards.user.js">highlight-discards.user.js</a> needs the discard string of the language you use on BGA.
