@@ -8,7 +8,7 @@
 // @homepageURL  https://github.com/yzemaze/bga-carcassonne-scripts/
 // @supportURL   https://github.com/yzemaze/bga-carcassonne-scripts/issues
 // @downloadURL  https://github.com/yzemaze/bga-carcassonne-scripts/raw/main/auto-zoom.user.js
-// @version      0.5.5
+// @version      0.5.6
 // @author       yzemaze
 // @license      GPL-3.0-or-later; https://www.gnu.org/licenses/gpl-3.0.txt
 // ==/UserScript==
@@ -114,6 +114,7 @@ if (document.querySelector(".bgagame-carcassonne") && window.innerWidth <= WIDTH
 		const button = document.createElement("div");
 		button.id = id;
 		button.className = "yzToggleBtn scrollmap_button_wrapper";
+		button.style.cursor = "pointer";
 		button.onclick = () => {
 			const active = button.classList.toggle("active");
 		}
